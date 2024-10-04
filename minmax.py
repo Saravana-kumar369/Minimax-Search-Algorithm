@@ -104,7 +104,7 @@ class Game:
                     self.current_state[i][j] = '.'
         return (maxv, px, py)
 
-    def min(self):
+        def min(self):
 
         # Possible values for minv are:
         # -1 - win
@@ -125,6 +125,23 @@ class Game:
             return (1, 0, 0)
         elif result == '.':
             return (0, 0, 0)
+
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if self.current_state[i][j] == '.':
+                    # On the empty field player 'X' makes a move and calls Max
+                    # That's one branch of the game tree.
+                    self.current_state[i][j] = 'X'
+                    (m, max_i, max_j) = self.max()
+                    # Fixing the minv value if needed
+                    if m < minv:
+                        minv = m
+                        qx = i
+                        qy = j
+                    # Setting back the field to empty
+                    self.current_state[i][j] = '.'
+        return (minv, qx, qy)
+
 
         '''
         TYPE THE CODE HERE BY REFERRING TO THE BELOW EXPLANATION.
